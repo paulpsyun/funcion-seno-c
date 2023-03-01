@@ -4,7 +4,6 @@
 unsigned long long factorial(int i);
 long double mysin(double x, int nterms);
 long double taylor (double x, int max);
-long double Pade (double x, int max);
 
 int main(int argc, char **argv)
 {
@@ -21,13 +20,11 @@ int main(int argc, char **argv)
 
     double exact = std::sin(x);
     double taylor = taylor(x, 5);
-    double sin_Pade = sinPade(x);
     double mysin = mysin(x, 10);
 
     fout << x << "\t"
-         << std::fabs(1.0 - sin_Taylor/exact) << "\t"
-         << std::fabs(1.0 - sin_Pade/exact) << "\t" 
-         << std::fabs(1.0 - sin_K/exact) << "\n";
+         << std::fabs(1.0 - taylor/exact) << "\t"
+         << std::fabs(1.0 - mysin/exact) << "\n";
   }
   fout.close();
 
