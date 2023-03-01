@@ -1,9 +1,11 @@
 #include <iostream>
 #include <cmath>
 
+
 unsigned long long factorial(int i);
 long double mysin(double x, int nterms);
 long double taylor (double x, int max);
+double mysinpade(double x, int terms);
 
 int main(int argc, char **argv)
 {
@@ -27,6 +29,11 @@ int main(int argc, char **argv)
          << std::fabs(1.0 - mysin/exact) << "\n";
   }
   fout.close();
+  
+    //aproximacion padé
+  double myvalpade = mysinpade(x,NTERMS);
+  
+  std::cout<<"padé: "<<myvalpade<<"\n";
 
   return 0;
 }
@@ -38,7 +45,10 @@ int main(){
 
     double exact = std::sin(x);
     double myval = mysin(x, nterms);
-   
+    std::cout << "Número de términos: " << nterms << "\n";
+    std::cout << "Valor aproximado: " << myval << "\n";
+    std::cout << "Valor exacto: " << exact << "\n";
+    
     return 0;
 }
 ///////////////////////////taylor ajustado////////////////////////////////////////////////
@@ -72,4 +82,11 @@ int factorial(int m){
         result *= k;
     }
     return result;
+}
+// funcion pade 
+double mysinpade(double x, int terms)
+{
+    
+    double divi = (((12671/4363920.0)*(std::pow(x,5)))-((2363/18183.0)*(std::pow(x,3)))+x)/((1.0)+((445/12122.0)*(std::pow(x,2)))+((601/872784.0)*(std::pow(x,4)))+((121/16662240.0)*(std::pow(x,6))));
+    return divi;
 }
