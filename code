@@ -1,0 +1,81 @@
+#include <iostream>
+#include <cmath>
+
+unsigned long long factorial(int i);
+long double mysin(double x, int nterms);
+long double taylor (double x, int max);
+long double Pade (double x, int max);
+
+int main(int argc, char **argv)
+{
+  double x {0.0};
+
+  if(argc != 1) {
+    std::cerr << "ERROR.\nUsage:\n" << argv[0] << "\n";
+    return 1;
+  }
+
+  std::ofstream fout("datos.txt");
+
+  for (x = 0; x <=6.28; x+=0.1) { 
+
+    double exact = std::sin(x);
+    double taylor = taylor(x, 5);
+    double sin_Pade = sinPade(x);
+    double mysin = mysin(x, 10);
+
+    fout << x << "\t"
+         << std::fabs(1.0 - sin_Taylor/exact) << "\t"
+         << std::fabs(1.0 - sin_Pade/exact) << "\t" 
+         << std::fabs(1.0 - sin_K/exact) << "\n";
+  }
+  fout.close();
+
+  return 0;
+}
+
+
+int main(){
+    double x = 5;
+    int nterms = 10;
+
+    double exact = std::sin(x);
+    double myval = mysin(x, nterms);
+    std::cout << "Número de términos: " << nterms << "\n";
+    std::cout << "Valor aproximado: " << myval << "\n";
+    std::cout << "Valor exacto: " << exact << "\n";
+    
+    return 0;
+}
+///////////////////////////taylor////////////////////////////////////////////////
+double mysin(double x, int nterms){
+    double total = 0.0;
+    int nmuterm = nterms - 1 ;
+    double h;
+    double prv = ((x*x*x)/(-6.0));
+    total = total + x + prv;
+    for(int k=1; k <= nmuterm; ++k){
+      h= (-(x*x) * prv )/ (((2*(k+1))+1)*(2*(k+1)));
+      total += (-(x*x) * prv )/ (((2*(k+1))+1)*(2*(k+1)));
+    prv = h;
+    }
+    return total;
+}
+
+///////////////////////////////////////////////////////taylor//////
+
+double taylor(double x, int nterms){
+    double total = 0.0;
+    for(int k=0; k <= nterms; ++k){
+        total += std::pow(-1, k) * std::pow(x, 2*k+1) / factorial((2*k+1));
+    }
+    return total;
+}
+
+int factorial(int m){
+    int result = 1;
+    for (int k=2; k <= m; ++k){
+        result *= k;
+    }
+    return result;
+}
