@@ -38,10 +38,7 @@ int main(){
 
     double exact = std::sin(x);
     double myval = mysin(x, nterms);
-    std::cout << "Número de términos: " << nterms << "\n";
-    std::cout << "Valor aproximado: " << myval << "\n";
-    std::cout << "Valor exacto: " << exact << "\n";
-    
+   
     return 0;
 }
 ///////////////////////////taylor ajustado////////////////////////////////////////////////
